@@ -1,6 +1,9 @@
-
 def getPolymerString():
     return open('./input.txt', 'r').read()
+
+
+def getPolarOpposite(character):
+    return character.upper() if character.islower() else character.lower()
 
 
 def reactPolymer(polymer=getPolymerString()):
@@ -13,7 +16,7 @@ def reactPolymer(polymer=getPolymerString()):
             skip = False
             continue
         else:
-            characterNeeded = character.upper() if character.islower() else character.lower()
+            characterNeeded = getPolarOpposite(character)
 
             if(len(polymerList) - 1 != index):
                 if(polymerList[index + 1] == characterNeeded):
@@ -29,5 +32,22 @@ def reactPolymer(polymer=getPolymerString()):
     return polymer
 
 
+def testPolymers():
+    polymer = getPolymerString()
+    shortestLength = None
+    polymerSet = set(getPolymerString())
+
+    for character in polymerSet:
+        testPolymer = str(polymer)
+        testPolymer = testPolymer.replace(character, '')
+        testPolymer = testPolymer.replace(getPolarOpposite(character), '')
+        length = len(reactPolymer(testPolymer))
+
+        if(not shortestLength or length < shortestLength):
+            shortestLength = length
+
+    return shortestLength
+
+
 if __name__ == "__main__":
-    print(len(reactPolymer()))
+    print(testPolymers())

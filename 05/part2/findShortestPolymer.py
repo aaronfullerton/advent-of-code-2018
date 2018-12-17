@@ -1,3 +1,7 @@
+import sys
+sys.setrecursionlimit(10**6)
+
+
 def getPolymerString():
     return open('./input.txt', 'r').read()
 
@@ -35,14 +39,13 @@ def reactPolymer(polymer=getPolymerString()):
 def testPolymers():
     polymer = getPolymerString()
     shortestLength = None
-    polymerSet = set(getPolymerString())
+    polymerSet = set(getPolymerString().upper())
 
     for character in polymerSet:
         testPolymer = str(polymer)
         testPolymer = testPolymer.replace(character, '')
         testPolymer = testPolymer.replace(getPolarOpposite(character), '')
         length = len(reactPolymer(testPolymer))
-
         if(not shortestLength or length < shortestLength):
             shortestLength = length
 
